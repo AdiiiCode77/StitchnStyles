@@ -3,6 +3,9 @@ import React from 'react';
 const FeaturesPage = () => {
   return (
     <div className="min-h-screen bg-[#3F418C] text-gray-800 font-poppins">
+    <div className="absolute inset-0 z-0 opacity-10">
+        <img src="/Assets/Images/Logo.png" alt="Background" className="w-full h-full object-contain" />
+      </div>
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className=" text-white text-4xl font-bold text-center mb-12">Our Features</h2>

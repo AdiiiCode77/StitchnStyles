@@ -1,4 +1,5 @@
 "use client"
+import Link from 'next/link';
 import React, { useEffect } from 'react';
 
 const LandingPage = () => {
@@ -22,14 +23,17 @@ const LandingPage = () => {
 
   return (
     <div className="min-h-screen bg-[#3F418C] text-white font-poppins flex items-center justify-center">
+    <div className="absolute inset-0 z-0 opacity-10">
+        <img src="/Assets/Images/Logo.png" alt="Background" className="w-full h-full object-contain" />
+      </div>
       <div className="flex flex-col md:flex-row items-center justify-between py-24 px-8 md:px-16">
         {/* Left Side: Header and Section Content */}
         <div className="md:w-3/5 flex flex-col justify-center items-center text-center animate-fadeIn h-full space-y-8">
           <h1 className=" text-2xl lg:text-5xl font-bold">AutoModel Insight</h1>
           <p className="text-lg lg:text-xl">Revolutionizing Car Detection and 3D Modeling</p>
-          <a href="/Components/LandingPage/Feature" alt="none" className="inline-block px-10 py-3 bg-white text-black rounded-lg shadow-lg  hover:px-12 transition duration-300">
-            Learn More
-          </a>
+          <Link href="/Components/GetStarted" alt="none" className="inline-block px-10 py-3 bg-white text-black rounded-lg shadow-lg  hover:px-12 transition duration-300">
+            Get Started
+          </Link>
           <div className="flex justify-around py-10 space-x-4">
             <div className="w-1/2 bg-white bg-opacity-10 p-6 hover:p-4 rounded-lg shadow-lg animate-slideIn">
               <h2 className="text-lg lg:text-2xl font-semibold mb-2">Car Detection</h2>
