@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <nav className="bg-[#F5EFFF] shadow-md">
+        <nav className="bg-[#F5EFFF] shadow-md z-10 relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-20">
             <Link href="/">

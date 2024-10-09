@@ -6,7 +6,7 @@ const ContactPage = () => {
     <div className="absolute inset-0 z-0 opacity-10">
         <img src="/Assets/Images/Logo.png" alt="Background" className="w-full h-full object-contain" />
       </div>
-      <div className="flex flex-col items-center justify-center py-24 px-8 md:px-16">
+      <div className="flex flex-col items-center justify-center py-24 px-8 md:px-16 z-10 relative">
         <h1 className="text-4xl font-bold mb-8">Contact Us</h1>
         <form className="w-full max-w-2xl  p-8 space-y-6">
           <div>

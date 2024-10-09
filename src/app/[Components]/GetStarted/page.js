@@ -16,7 +16,7 @@ const LandingPage = () => {
     <div className="absolute inset-0 z-0 opacity-10">
         <img src="/Assets/Images/Logo.png" alt="Background" className="w-full h-full object-contain" />
       </div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-4 lg:px-8 text-center ">
+      <div className="max-w-7xl mx-auto px-4 sm:px-4 lg:px-8 text-center z-10 relative">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 sm:mb-10 lg:mb-12">
           Welcome to AutoModel Insight
         </h1>

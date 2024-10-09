@@ -26,7 +26,7 @@ const LandingPage = () => {
     <div className="absolute inset-0 z-0 opacity-10">
         <img src="/Assets/Images/Logo.png" alt="Background" className="w-full h-full object-contain" />
       </div>
-      <div className="flex flex-col md:flex-row items-center justify-between py-24 px-8 md:px-16">
+      <div className="flex flex-col md:flex-row items-center justify-between py-24 px-8 md:px-16 z-10 relative">
         {/* Left Side: Header and Section Content */}
         <div className="md:w-3/5 flex flex-col justify-center items-center text-center animate-fadeIn h-full space-y-8">
           <h1 className=" text-2xl lg:text-5xl font-bold">AutoModel Insight</h1>

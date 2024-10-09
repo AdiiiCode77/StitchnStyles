@@ -6,7 +6,7 @@ const FeaturesPage = () => {
     <div className="absolute inset-0 z-0 opacity-10">
         <img src="/Assets/Images/Logo.png" alt="Background" className="w-full h-full object-contain" />
       </div>
-      <section className="py-20">
+      <section className="py-20 z-10 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className=" text-white text-4xl font-bold text-center mb-12">Our Features</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
