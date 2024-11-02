@@ -22,6 +22,7 @@ const CarIdentificationPage = () => {
     const file = e.target.files[0];
     if (file) {
       setSelectedImage(file); // Store the actual file to send to the API
+      setShowPopup(false); // Close popup after selecting
     }
   };
 
@@ -59,11 +60,10 @@ const CarIdentificationPage = () => {
 
   // Handle option selection
   const handleOptionSelect = (option) => {
-    setShowPopup(false); // Close the popup
     const input = document.getElementById("imageInput");
-
+    
     // Open the file selector
-    input.click(); 
+    input.click();
   };
 
   return (
@@ -91,7 +91,13 @@ const CarIdentificationPage = () => {
         )}
 
         <button
-          onClick={() => (isMobile ? setShowPopup(true) : document.getElementById("imageInput").click())}
+          onClick={() => {
+            if (isMobile) {
+              setShowPopup(true);
+            } else {
+              document.getElementById("imageInput").click();
+            }
+          }}
           className="bg-[#3F418C] text-white px-6 py-2 rounded-lg hover:bg-[#2c316f] transition duration-300 w-full"
         >
           Upload Photo
@@ -103,13 +109,13 @@ const CarIdentificationPage = () => {
             <div className="bg-white text-gray-700 p-4 rounded-lg shadow-lg w-full max-w-sm">
               <h2 className="text-lg font-semibold mb-2">Select an Option</h2>
               <button
-                onClick={() => handleOptionSelect("files")}
+                onClick={handleOptionSelect}
                 className="block w-full bg-[#3F418C] text-white px-4 py-2 rounded-lg mb-2 hover:bg-[#2c316f]"
               >
                 From Files
               </button>
               <button
-                onClick={() => handleOptionSelect("camera")}
+                onClick={handleOptionSelect}
                 className="block w-full bg-[#3F418C] text-white px-4 py-2 rounded-lg hover:bg-[#2c316f]"
               >
                 From Camera
