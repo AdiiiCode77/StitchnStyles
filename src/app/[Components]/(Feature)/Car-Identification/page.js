@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 const CarIdentificationPage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -49,6 +49,22 @@ const CarIdentificationPage = () => {
     }
   };
 
+  // Function to open file input
+  const openFileInput = () => {
+    setShowPopup(false); // Close the popup
+    const input = document.getElementById("imageInput");
+    input.setAttribute("capture", ""); // Reset capture attribute
+    input.click(); // Open file input
+  };
+
+  // Function to open camera input
+  const openCameraInput = () => {
+    setShowPopup(false); // Close the popup
+    const input = document.getElementById("imageInput");
+    input.setAttribute("capture", "camera"); // Set to use camera
+    input.click(); // Open file input
+  };
+
   return (
     <div className="min-h-screen bg-[#3F418C] text-white font-poppins flex flex-col items-center justify-center py-4 px-4 md:px-4 relative">
       {/* Background Image */}
@@ -86,21 +102,13 @@ const CarIdentificationPage = () => {
             <div className="bg-white text-gray-700 p-4 rounded-lg shadow-lg w-full max-w-sm">
               <h2 className="text-lg font-semibold mb-2">Select an Option</h2>
               <button
-                onClick={() => {
-                  setShowPopup(false); // Close popup
-                  document.getElementById("imageInput").click(); // Open file input
-                }}
+                onClick={openFileInput} // Open file input
                 className="block w-full bg-[#3F418C] text-white px-4 py-2 rounded-lg mb-2 hover:bg-[#2c316f]"
               >
                 From Files
               </button>
               <button
-                onClick={() => {
-                  setShowPopup(false); // Close popup
-                  const input = document.getElementById("imageInput");
-                  input.setAttribute("capture", "camera"); // Set to use camera
-                  input.click(); // Open file input
-                }}
+                onClick={openCameraInput} // Open camera input
                 className="block w-full bg-[#3F418C] text-white px-4 py-2 rounded-lg hover:bg-[#2c316f]"
               >
                 From Camera
