@@ -4,20 +4,47 @@ import React, { useState } from "react";
 const CarIdentificationPage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [carModel, setCarModel] = useState("");
+  const [loading, setLoading] = useState(false); // For showing a loader during API call
+  const [error, setError] = useState(null); // For error handling
 
   // Handle image selection
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setSelectedImage(URL.createObjectURL(file));
+      setSelectedImage(file); // Store the actual file to send to the API
     }
   };
 
-  // Simulate car model identification (replace this with actual AI processing logic)
-  const identifyCarModel = () => {
-    setTimeout(() => {
-      setCarModel("Tesla Model S"); // This is a mock result. Replace with real AI response.
-    }, 2000);
+  // Function to handle the car identification API call
+  const identifyCarModel = async () => {
+    if (!selectedImage) return;
+
+    setLoading(true);
+    setError(null);
+
+    const formData = new FormData();
+    formData.append("image", selectedImage); // Append the selected image to formData
+
+    try {
+      // Make the API call to send the image
+      const response = await fetch("https://brave-tools-do.loca.lt", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to identify the car model");
+      }
+
+      const data = await response.json(); // Assuming the response is in JSON format
+
+      // Set the identified car model in the state
+      setCarModel(data.model); // Change this according to your API response structure
+    } catch (err) {
+      setError("Error identifying the car model. Please try again.");
+    } finally {
+      setLoading(false); // Stop the loader
+    }
   };
 
   return (
@@ -35,7 +62,7 @@ const CarIdentificationPage = () => {
         {selectedImage ? (
           <div className="mb-4 w-full h-48 flex justify-center items-center overflow-hidden rounded-lg">
             <img
-              src={selectedImage}
+              src={URL.createObjectURL(selectedImage)} // Show the preview of the image
               alt="Selected Car"
               className="w-full h-full object-contain"
             />
@@ -44,29 +71,53 @@ const CarIdentificationPage = () => {
           <p className="mb-4 text-gray-500">No image uploaded. Please upload a car image.</p>
         )}
 
-        <label
-          htmlFor="carImageUpload"
-          className="block bg-[#3F418C] text-white px-4 py-2 rounded-lg cursor-pointer mb-4 transition duration-300 hover:bg-[#2c316f] text-center"
-        >
-          Upload Car Image
-        </label>
-        <input
-          type="file"
-          id="carImageUpload"
-          className="hidden"
-          accept="image/*"
-          onChange={handleImageChange}
-        />
-
-        {selectedImage && (
-          <button
-            onClick={identifyCarModel}
-            className="bg-[#3F418C] text-white px-6 py-2 rounded-lg hover:bg-[#2c316f] transition duration-300 w-full"
+        <div className="flex flex-col space-y-4">
+          <label
+            htmlFor="fileUpload"
+            className="block bg-[#3F418C] text-white px-4 py-2 rounded-lg cursor-pointer transition duration-300 hover:bg-[#2c316f] text-center"
           >
-            Identify Car Model
-          </button>
-        )}
+            Upload Car Image from Files
+          </label>
+          <input
+            type="file"
+            id="fileUpload"
+            className="hidden"
+            accept="image/*"
+            onChange={handleImageChange}
+          />
+
+          <label
+            htmlFor="cameraUpload"
+            className="block bg-[#3F418C] text-white px-4 py-2 rounded-lg cursor-pointer transition duration-300 hover:bg-[#2c316f] text-center"
+          >
+            Capture Car Image with Camera (Desktop: Select from Files)
+          </label>
+          <input
+            type="file"
+            id="cameraUpload"
+            className="hidden"
+            accept="image/*"
+            onChange={handleImageChange}
+            capture="camera"
+          />
+
+          {selectedImage && (
+            <button
+              onClick={identifyCarModel}
+              className="bg-[#3F418C] text-white px-6 py-2 rounded-lg hover:bg-[#2c316f] transition duration-300 w-full"
+              disabled={loading} // Disable the button while loading
+            >
+              {loading ? "Identifying..." : "Identify Car Model"}
+            </button>
+          )}
+        </div>
       </div>
+
+      {error && (
+        <div className="bg-red-100 p-4 rounded-lg shadow-lg text-red-700 mt-4 w-full max-w-lg z-10 relative">
+          <p>{error}</p>
+        </div>
+      )}
 
       {carModel && (
         <div className="bg-gray-100 p-4 rounded-lg shadow-lg text-gray-700 mt-8 w-full max-w-lg z-10 relative">
