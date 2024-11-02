@@ -1,11 +1,21 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const CarIdentificationPage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [carModel, setCarModel] = useState("");
   const [loading, setLoading] = useState(false); // For showing a loader during API call
   const [error, setError] = useState(null); // For error handling
+  const [showPopup, setShowPopup] = useState(false); // State for showing popup
+  const [isMobile, setIsMobile] = useState(false); // State to check if the device is mobile
+
+  // Check if the user is on a mobile device
+  useEffect(() => {
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    setIsMobile(
+      /android|iPad|iPhone|iPod/.test(userAgent) && !window.MSStream
+    );
+  }, []);
 
   // Handle image selection
   const handleImageChange = (e) => {
@@ -47,6 +57,15 @@ const CarIdentificationPage = () => {
     }
   };
 
+  // Handle option selection
+  const handleOptionSelect = (option) => {
+    setShowPopup(false); // Close the popup
+    const input = document.getElementById("imageInput");
+
+    // Open the file selector
+    input.click(); 
+  };
+
   return (
     <div className="min-h-screen bg-[#3F418C] text-white font-poppins flex flex-col items-center justify-center py-4 px-4 md:px-4 relative">
       {/* Background Image */}
@@ -71,46 +90,58 @@ const CarIdentificationPage = () => {
           <p className="mb-4 text-gray-500">No image uploaded. Please upload a car image.</p>
         )}
 
-        <div className="flex flex-col space-y-4">
-          <label
-            htmlFor="fileUpload"
-            className="block bg-[#3F418C] text-white px-4 py-2 rounded-lg cursor-pointer transition duration-300 hover:bg-[#2c316f] text-center"
-          >
-            Upload Car Image from Files
-          </label>
-          <input
-            type="file"
-            id="fileUpload"
-            className="hidden"
-            accept="image/*"
-            onChange={handleImageChange}
-          />
+        <button
+          onClick={() => (isMobile ? setShowPopup(true) : document.getElementById("imageInput").click())}
+          className="bg-[#3F418C] text-white px-6 py-2 rounded-lg hover:bg-[#2c316f] transition duration-300 w-full"
+        >
+          Upload Photo
+        </button>
 
-          <label
-            htmlFor="cameraUpload"
-            className="block bg-[#3F418C] text-white px-4 py-2 rounded-lg cursor-pointer transition duration-300 hover:bg-[#2c316f] text-center"
-          >
-            Capture Car Image with Camera (Desktop: Select from Files)
-          </label>
-          <input
-            type="file"
-            id="cameraUpload"
-            className="hidden"
-            accept="image/*"
-            onChange={handleImageChange}
-            capture="camera"
-          />
+        {/* Popup for options on mobile */}
+        {showPopup && (
+          <div className="fixed inset-0 flex items-end justify-center z-50">
+            <div className="bg-white text-gray-700 p-4 rounded-lg shadow-lg w-full max-w-sm">
+              <h2 className="text-lg font-semibold mb-2">Select an Option</h2>
+              <button
+                onClick={() => handleOptionSelect("files")}
+                className="block w-full bg-[#3F418C] text-white px-4 py-2 rounded-lg mb-2 hover:bg-[#2c316f]"
+              >
+                From Files
+              </button>
+              <button
+                onClick={() => handleOptionSelect("camera")}
+                className="block w-full bg-[#3F418C] text-white px-4 py-2 rounded-lg hover:bg-[#2c316f]"
+              >
+                From Camera
+              </button>
+              <button
+                onClick={() => setShowPopup(false)}
+                className="block w-full text-center text-red-600 mt-2"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        )}
 
-          {selectedImage && (
-            <button
-              onClick={identifyCarModel}
-              className="bg-[#3F418C] text-white px-6 py-2 rounded-lg hover:bg-[#2c316f] transition duration-300 w-full"
-              disabled={loading} // Disable the button while loading
-            >
-              {loading ? "Identifying..." : "Identify Car Model"}
-            </button>
-          )}
-        </div>
+        <input
+          type="file"
+          id="imageInput"
+          className="hidden"
+          accept="image/*"
+          onChange={handleImageChange}
+          capture="camera" // Open camera on mobile devices if supported
+        />
+
+        {selectedImage && (
+          <button
+            onClick={identifyCarModel}
+            className="bg-[#3F418C] text-white px-6 py-2 rounded-lg hover:bg-[#2c316f] transition duration-300 w-full mt-4"
+            disabled={loading} // Disable the button while loading
+          >
+            {loading ? "Identifying..." : "Identify Car Model"}
+          </button>
+        )}
       </div>
 
       {error && (
