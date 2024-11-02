@@ -7,15 +7,6 @@ const CarIdentificationPage = () => {
   const [loading, setLoading] = useState(false); // For showing a loader during API call
   const [error, setError] = useState(null); // For error handling
   const [showPopup, setShowPopup] = useState(false); // State for showing popup
-  const [isMobile, setIsMobile] = useState(false); // State to check if the device is mobile
-
-  // Check if the user is on a mobile device
-  useEffect(() => {
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    setIsMobile(
-      /android|iPad|iPhone|iPod/.test(userAgent) && !window.MSStream
-    );
-  }, []);
 
   // Handle image selection
   const handleImageChange = (e) => {
@@ -58,14 +49,6 @@ const CarIdentificationPage = () => {
     }
   };
 
-  // Handle option selection
-  const handleOptionSelect = (option) => {
-    const input = document.getElementById("imageInput");
-    
-    // Open the file selector
-    input.click();
-  };
-
   return (
     <div className="min-h-screen bg-[#3F418C] text-white font-poppins flex flex-col items-center justify-center py-4 px-4 md:px-4 relative">
       {/* Background Image */}
@@ -91,13 +74,7 @@ const CarIdentificationPage = () => {
         )}
 
         <button
-          onClick={() => {
-            if (isMobile) {
-              setShowPopup(true);
-            } else {
-              document.getElementById("imageInput").click();
-            }
-          }}
+          onClick={() => setShowPopup(true)} // Show the popup when clicked
           className="bg-[#3F418C] text-white px-6 py-2 rounded-lg hover:bg-[#2c316f] transition duration-300 w-full"
         >
           Upload Photo
@@ -109,13 +86,21 @@ const CarIdentificationPage = () => {
             <div className="bg-white text-gray-700 p-4 rounded-lg shadow-lg w-full max-w-sm">
               <h2 className="text-lg font-semibold mb-2">Select an Option</h2>
               <button
-                onClick={handleOptionSelect}
+                onClick={() => {
+                  setShowPopup(false); // Close popup
+                  document.getElementById("imageInput").click(); // Open file input
+                }}
                 className="block w-full bg-[#3F418C] text-white px-4 py-2 rounded-lg mb-2 hover:bg-[#2c316f]"
               >
                 From Files
               </button>
               <button
-                onClick={handleOptionSelect}
+                onClick={() => {
+                  setShowPopup(false); // Close popup
+                  const input = document.getElementById("imageInput");
+                  input.setAttribute("capture", "camera"); // Set to use camera
+                  input.click(); // Open file input
+                }}
                 className="block w-full bg-[#3F418C] text-white px-4 py-2 rounded-lg hover:bg-[#2c316f]"
               >
                 From Camera
@@ -136,7 +121,6 @@ const CarIdentificationPage = () => {
           className="hidden"
           accept="image/*"
           onChange={handleImageChange}
-          capture="camera" // Open camera on mobile devices if supported
         />
 
         {selectedImage && (
