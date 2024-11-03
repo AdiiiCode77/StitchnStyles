@@ -44,8 +44,8 @@ const CarIdentificationPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#3F418C] text-white font-poppins flex flex-col items-center justify-center px-4 md:px-4">
-      <h1 className="text-4xl md:text-5xl font-bold mb-8 text-center">
+    <div className="min-h-screen bg-[#3F418C] text-white font-poppins flex flex-col items-center justify-center px-4 md:px-0">
+      <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center">
         Car Identification
       </h1>
       <div className="flex flex-col md:flex-row gap-8 items-center justify-center w-full max-w-6xl">
@@ -60,7 +60,7 @@ const CarIdentificationPage = () => {
               />
             ) : (
               <img
-                src="path/to/dummy-image.jpg" // Replace with the path to your dummy image
+                src="/Assets/Images/upload.jpg" // Replace with the path to your dummy image
                 alt="Dummy Car"
                 className="w-full h-full object-contain"
               />
