@@ -1,57 +1,57 @@
-"use client"
-import Link from 'next/link';
-import React, { useEffect } from 'react';
+// components/SocialLinks.js
+import Image from 'next/image';
+import React from 'react';
 
-const LandingPage = () => {
-    useEffect(() => {
-      const handleResize = () => {
-        if (window.innerWidth < 768) {
-          document.body.style.overflow = 'auto'; // Enable scrolling for small and medium screens
-        } else {
-          document.body.style.overflow = 'hidden'; // Disable scrolling for larger screens
-        }
-      };
-  
-      handleResize(); // Set initial state
-      window.addEventListener('resize', handleResize); // Update on resize
-  
-      return () => {
-        document.body.style.overflow = 'auto'; // Re-enable scrolling when component unmounts
-        window.removeEventListener('resize', handleResize); // Clean up event listener
-      };
-    }, []);
+const SocialLinks = () => {
+  const links = [
+    { name: 'Facebook', url: 'https://www.facebook.com', img: '/Images/facebook.png', color: 'bg-white' },
+    { name: 'Instagram', url: 'https://www.instagram.com', img: '/Images/instagram.png', color: 'bg-white' },
+    { name: 'TikTok', url: 'https://www.tiktok.com', img: '/Images/tik-tok.png', color: 'bg-white' },
+    { name: 'Gmail', url: 'mailto:your-email@gmail.com', img: '/Images/email.png', color: 'bg-white' },
+  ];
 
   return (
-    <div className="min-h-screen bg-[#3F418C] text-white font-poppins flex items-center justify-center">
-    <div className="absolute inset-0 z-0 opacity-10">
-        <img src="/Assets/Images/Logo.png" alt="Background" className="w-full h-full object-contain" />
-      </div>
-      <div className="flex flex-col md:flex-row items-center justify-between py-24 px-8 md:px-16 z-10 relative">
-        {/* Left Side: Header and Section Content */}
-        <div className="md:w-3/5 flex flex-col justify-center items-center text-center animate-fadeIn h-full space-y-8">
-          <h1 className=" text-2xl lg:text-5xl font-bold">AutoModel Insight</h1>
-          <p className="text-lg lg:text-xl">Revolutionizing Car Detection and 3D Modeling</p>
-          <Link href="/Components/GetStarted" alt="none" className="inline-block px-10 py-3 bg-white text-black rounded-lg shadow-lg  hover:px-12 transition duration-300">
-            Get Started
-          </Link>
-          <div className="flex justify-around py-10 space-x-4">
-            <div className="w-1/2 bg-white bg-opacity-10 p-6 hover:p-4 rounded-lg shadow-lg animate-slideIn">
-              <h2 className="text-lg lg:text-2xl font-semibold mb-2">Car Detection</h2>
-              <p>Upload an image and let our AI detect the car model instantly.</p>
-            </div>
-            <div className="w-1/2 bg-white bg-opacity-10 p-6 hover:p-4 rounded-lg shadow-lg animate-slideIn">
-              <h2 className="text-lg lg:text-2xl font-semibold mb-2">3D Modeling & Customization</h2>
-              <p>Experience the future of car customization with our 3D tools.</p>
-            </div>
-          </div>
+    <div className="relative bg-black min-h-screen overflow-hidden">
+      {/* Background video */}
+      <video
+        autoPlay
+        loop
+        muted
+        className="absolute inset-0 w-full h-full object-cover opacity-50"
+      >
+        <source src="/Images/stitch.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
+      {/* Content overlay */}
+      <div className="relative flex flex-col items-center py-10 text-center px-4 sm:px-8">
+        <h1 className="text-4xl font-extrabold text-white mb-8">Connect with Stitch & Styles</h1>
+        
+        {/* Social Links */}
+        <div className="flex flex-col items-center gap-6 w-full sm:w-auto">
+          {links.map((link) => (
+            <a
+              key={link.name}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-start w-full max-w-xs sm:max-w-md lg:max-w-lg p-4 bg-white shadow-lg rounded-lg transition-transform hover:scale-105 border-l-4 hover:border-indigo-500"
+            >
+              <div className={`flex items-center justify-center w-16 h-16 rounded-full ${link.color} bg-opacity-90`}>
+                <Image src={link.img} alt={`${link.name} logo`} width={32} height={32} />
+              </div>
+              <span className="ml-4 text-gray-700 font-semibold">{link.name}</span>
+            </a>
+          ))}
         </div>
-        {/* Right Side: Car Image */}
-        <div className="md:w-2/5 mt-8 md:mt-0 animate-slideIn hover:shadow-lg hover:rounded-lg">
-          <img src="Assets/Images/BG.png" alt="Car" className="w-full h-auto" />
+
+        {/* Logo at the bottom */}
+        <div className="mt-12">
+          <Image src="/Images/abcd.jpg" alt="Stitch & Styles Logo" width={120} height={120} className="rounded-full" />
         </div>
       </div>
     </div>
   );
 };
 
-export default LandingPage;
+export default SocialLinks;
