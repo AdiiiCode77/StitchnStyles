@@ -4,10 +4,10 @@ import React from 'react';
 
 const SocialLinks = () => {
   const links = [
-    { name: 'Facebook', url: 'https://www.facebook.com', img: '/Images/facebook.png', color: 'bg-white' },
-    { name: 'Instagram', url: 'https://www.instagram.com', img: '/Images/instagram.png', color: 'bg-white' },
-    { name: 'TikTok', url: 'https://www.tiktok.com', img: '/Images/tik-tok.png', color: 'bg-white' },
-    { name: 'Gmail', url: 'mailto:your-email@gmail.com', img: '/Images/email.png', color: 'bg-white' },
+    { name: 'Facebook', url: 'https://www.facebook.com/profile.php?id=61567295261603&mibextid=LQQJ4d', img: '/Images/facebook.png', color: 'bg-white' },
+    { name: 'Instagram', url: 'https://www.instagram.com/sticthandstyle/profilecard/?igsh=ZmIxNDRvenU4NjRl', img: '/Images/instagram.png', color: 'bg-white' },
+    { name: 'TikTok', url: 'https://www.tiktok.com/@stichandstyle2?_t=8r9Intcp8S2&_r=1', img: '/Images/tik-tok.png', color: 'bg-white' },
+    { name: 'Gmail', url: 'mailto:stitchandstyle78@gmail.com', img: '/Images/email.png', color: 'bg-white' },
   ];
 
   return (
